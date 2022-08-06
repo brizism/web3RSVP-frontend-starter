@@ -2,18 +2,21 @@ import abiJSON from "./Web3RSVP.json";
 import { ethers } from "ethers";
 
 function connectContract() {
-  //Note: Your contractAddress will start with 0x, delete everything between the quotes and paste your contract address.
-  const contractAddress = "0x[YOUR_CONTRACT_ADDRESS]";
+  const contractAddress = "0xF14155069D10076CE5e8E177eA3a8b5Cbc67aE49";
   const contractABI = abiJSON.abi;
   let rsvpContract;
   try {
     const { ethereum } = window;
 
-    if (ethereum) {
-      //checking for eth object in the window
+    if (ethereum.chainId === "0x13881") {
+      //checking for eth object in the window, see if they have wallet connected to Polygon Mumbai network
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      rsvpContract = new ethers.Contract(contractAddress, contractABI, signer); // instantiating new connection to the contract
+      rsvpContract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      ); // instantiating new connection to the contract
     } else {
       console.log("Ethereum object doesn't exist!");
     }
